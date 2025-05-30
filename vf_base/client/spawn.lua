@@ -30,17 +30,17 @@ AddEventHandler('onClientGameTypeStart', function()
 end)
 
 Citizen.CreateThread(function()
-	if not firstTick then		
+	if not firstTick then
 		while not NetworkIsGameInProgress() and IsPlayerPlaying(PlayerId()) do
 			Wait(800)
 		end
 
 		if not IsPlayerSwitchInProgress() then
 			SetEntityVisible(PlayerPedId(), false, 0)
-			SwitchOutPlayer(PlayerPedId(), 32, 1)
+        	SwitchToMultiFirstpart(PlayerPedId(), 32, 1)
 			Wait(3000)
 
-			showLoadingPromt("PCARD_JOIN_GAME", 8000)
+			showLoadingPrompt("PCARD_JOIN_GAME", 8000)
 			Wait(1000)
 			TriggerServerEvent("vf_base:GetInventory")	
 		end
@@ -53,7 +53,7 @@ Citizen.CreateThread(function()
 
 		Wait(5000)
 
-		SwitchInPlayer(PlayerPedId())
+		SwitchToMultiSecondpart(PlayerPedId())
 		SetEntityVisible(PlayerPedId(), true, 0)
 		Wait(5000)		
 
@@ -81,7 +81,7 @@ Citizen.CreateThread(function()
 
 	while true do
 		Wait(10)
-		if firstTick then	
+		if firstTick then
 			if IsPedDead then
 				deathscale = RequestDeathScreen()
 				if IsControlJustPressed(0, 24) then
@@ -110,7 +110,7 @@ Citizen.CreateThread(function()
 					SetScaleformMovieAsNoLongerNeeded(deathscale)
 					SetScaleformMovieAsNoLongerNeeded(Instructional)
 
-					TriggerServerEvent('vf_ammunation:LoadPlayer')				
+					TriggerServerEvent('vf_ammunation:LoadPlayer')
 					Wait(800)
 					DoScreenFadeIn(500)
 					locksound = false
@@ -127,7 +127,7 @@ Citizen.CreateThread(function()
 
 					BeginScaleformMovieMethodHudComponent(19, "SHOW")
 					EndScaleformMovieMethodReturn()
-				end		
+				end
 			end
 		end
 	end

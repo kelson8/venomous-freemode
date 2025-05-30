@@ -406,7 +406,9 @@ Citizen.CreateThread(function()
             coords = GetEntityCoords(PlayerPedId(), true)
 
             if not DoesInteractionMenuExist then
-                if IsControlJustPressed(1, 244) then                    
+                -- Changed from 'M' to 'N', conflicts with vMenu.
+                -- if IsControlJustPressed(1, 244) then                    
+                if IsControlJustPressed(1, 249) then
                     inventoryItems = exports.vf_base:GetInventory()
                     _menuPool = MenuPool.New()
                     mainMenu = UIMenu.New(playerName, "~b~" .. GetLabelText("INPUT_INTERACTION_MENU"))

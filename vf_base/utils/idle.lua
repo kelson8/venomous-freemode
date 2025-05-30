@@ -50,7 +50,7 @@ local function ConvertTime(ms, timerSound)
 end
 
 local function DisplayIdleText(time)
-	if notify then	
+	if notify then
 		RemoveNotification(notify)
 	end
 

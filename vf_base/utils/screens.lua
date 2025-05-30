@@ -20,6 +20,7 @@ local warningDisplayed
 warning = nil
 deathscale = nil
 
+-- Notifications
 function DisplayNotification(text)
     SetNotificationTextEntry("STRING")
     SetNotificationBackgroundColor(140)
@@ -35,8 +36,10 @@ function DisplayNotificationWithImg(icon, type, sender, title, text, color)
     DrawNotification(false, true)
     PlaySoundFrontend(GetSoundId(), "Text_Arrive_Tone", "Phone_SoundSet_Default", true)
 end
+--
 
-function showLoadingPromt(label, time)
+-- Show the loading busy spinner and a message.
+function showLoadingPrompt(label, time)
     Citizen.CreateThread(function()
         BeginTextCommandBusyString(tostring(label))
         EndTextCommandBusyString(3)
@@ -52,7 +55,8 @@ function SetButtonMessage(text)
 end
 
 function SetButton(ControlButton)
-    N_0xe83a3e3557a56640(ControlButton)
+    -- N_0xe83a3e3557a56640(ControlButton)
+    ScaleformMovieMethodAddParamPlayerNameString(ControlButton)
 end
 
 function RequestDeathScaleform()
@@ -65,9 +69,10 @@ function RequestDeathScaleform()
     return deathform
 end
 
+-- Show the wasted screen
 function RequestDeathScreen()
 	HideHudAndRadarThisFrame()
-	
+
 	if not locksound then
 		ShakeGameplayCam("DEATH_FAIL_IN_EFFECT_SHAKE", 2.0)
 		StartScreenEffect("DeathFailOut", 0, true)
@@ -81,10 +86,10 @@ function RequestDeathScreen()
     BeginTextCommandScaleformString("STRING")
     AddTextComponentSubstringTextLabel("RESPAWN_W")
     EndTextCommandScaleformString()
-	
+
     BeginTextCommandScaleformString("AMHB_BYOUDIED")
     EndTextCommandScaleformString()
-	
+
 	PushScaleformMovieFunctionParameterFloat(105.0)
 	PushScaleformMovieFunctionParameterBool(true)
 	EndScaleformMovieMethod()
@@ -94,7 +99,7 @@ function RequestDeathScreen()
 
     BeginScaleformMovieMethod(Instructional, "CLEAR_ALL")
     EndScaleformMovieMethod()
-    
+
     BeginScaleformMovieMethod(Instructional, "SET_CLEAR_SPACE")
     PushScaleformMovieFunctionParameterInt(200)
     EndScaleformMovieMethod()
@@ -120,6 +125,7 @@ function RequestDeathScreen()
 	return deathscale
 end
 
+-- Setup the player xp bar
 function SetPlayerScores(currentRankLimit, nextRankLimit, playersPreviousXP, playersCurrentXP, rank)
     if not HasHudScaleformLoaded(19) then
         RequestHudScaleform(19)
@@ -134,6 +140,7 @@ function SetPlayerScores(currentRankLimit, nextRankLimit, playersPreviousXP, pla
     PushScaleformMovieFunctionParameterInt(rank)
     EndScaleformMovieMethodReturn()
 end
+
 
 Citizen.CreateThread(function()
     while true do

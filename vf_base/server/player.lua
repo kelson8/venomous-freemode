@@ -80,10 +80,10 @@ function Player:AddCash(source, value)
 		exports.ghmattimysql:scalar("SELECT cash FROM venomous_players WHERE license = @license", { ['license'] = tostring(pLicense)}, function (CashResult)
 			if CashResult then
 				local newvalue = CashResult + value
-				
+
 				exports.ghmattimysql:execute("UPDATE venomous_players SET cash=@value WHERE license = @license", {['license'] = tostring(pLicense), ['value'] = tostring(newvalue)})
 				TriggerClientEvent('vf_base:DisplayCashValue', src, newvalue)
-				
+
 				local newvalue = nil
 				CashResult = nil
 			end

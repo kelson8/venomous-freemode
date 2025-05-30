@@ -27,7 +27,7 @@ function DestroyPV(personalVeh)
 			TaskLeaveVehicle(PlayerPedId(), personalVeh, 0)
 			Wait(5000)
 		end
-		
+
         DeleteEntity(personalVeh)
         personalVeh = nil
     else

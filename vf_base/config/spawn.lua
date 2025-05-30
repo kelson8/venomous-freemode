@@ -1,3 +1,5 @@
+-- Setup the player spawn locations in this file.
+
 SpawnLocations = {
    {x= -1040.302, y= -227.768, z= 39.014},
    {x= -729.639, y= -674.975, z= 30.271},
