@@ -37,50 +37,63 @@ Citizen.CreateThread(function()
         Wait(0)
 
         if Phone.Visible then
+            
             SetPauseMenuActive(false)
             SetMobilePhonePosition(58.0, -21.0 - Phone.VisibleAnimProgress, -60.0)
             SetMobilePhoneRotation(-90.0, Phone.VisibleAnimProgress * 4.0, 0.0)
+
             if Phone.VisibleAnimProgress > 0 then
                 Phone.VisibleAnimProgress = Phone.VisibleAnimProgress - 2
             end
 
+            -- Set the titlebar theme to have the clock hours and minutes.
             local h, m = GetClockHours(), GetClockMinutes()
             BeginScaleformMovieMethod(Phone.Scaleform, "SET_TITLEBAR_TIME")
             ScaleformMovieMethodAddParamInt(h)
             ScaleformMovieMethodAddParamInt(m)
             EndScaleformMovieMethod()
 
+            -- Set the sleep mode if toggled
             BeginScaleformMovieMethod(Phone.Scaleform, "SET_SLEEP_MODE")
             ScaleformMovieMethodAddParamBool(Phone.SleepMode)
             EndScaleformMovieMethod()
 
+            -- Set the theme of the phone
             BeginScaleformMovieMethod(Phone.Scaleform, "SET_THEME")
             ScaleformMovieMethodAddParamInt(Phone.Theme)
             EndScaleformMovieMethod()
 
+            -- Set the background image of the phone
             BeginScaleformMovieMethod(Phone.Scaleform, "SET_BACKGROUND_IMAGE")
             ScaleformMovieMethodAddParamInt(Phone.Wallpaper)
             EndScaleformMovieMethod()
+            --
 
             local playerCoords = GetEntityCoords(PlayerPedId())
             local zone = GetZoneAtCoords(playerCoords.x, playerCoords.y, playerCoords.z)
 
+            -- Set the phone signal strength
             Phone.SignalStrength = 5 - GetZoneScumminess(zone)
 
             BeginScaleformMovieMethod(Phone.Scaleform, "SET_SIGNAL_STRENGTH")
             ScaleformMovieMethodAddParamInt(Phone.SignalStrength)
             EndScaleformMovieMethod()
+            --
 
             local renderID = GetMobilePhoneRenderId()
 			SetTextRenderId(renderId)
 			DrawScaleformMovie(Phone.Scaleform, 0.0998, 0.1775, 0.1983, 0.364, 255, 255, 255, 255);
             SetTextRenderId(1)
+
+            -- Set the phone scaleform and load it here
         elseif IsControlJustPressed(3, 27) then -- INPUT_PHONE (arrow up / mmb)
             PlaySoundFrontend(-1, "Pull_Out", "Phone_SoundSet_Default")
             Phone.Scaleform = RequestScaleformMovie("CELLPHONE_IFRUIT")
             while not HasScaleformMovieLoaded(Phone.Scaleform) do
                 Wait(0)
             end
+            
+            -- Set phone to visible, set the position and scale, then create the phone.
             Phone.VisibleAnimProgress = 21
             Phone.Visible = true
             SetMobilePhonePosition()

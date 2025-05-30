@@ -100,12 +100,13 @@ Citizen.CreateThread(function()
                     end
                     EndScaleformMovieMethod()
                 end
-            
+
+
                 BeginScaleformMovieMethod(Phone.Scaleform, "DISPLAY_VIEW")
                 ScaleformMovieMethodAddParamInt(CurrentScreen.Type)
                 ScaleformMovieMethodAddParamInt(SelectedItem)
                 EndScaleformMovieMethod()
-            
+
                 -- Fix SelectedItem in case last item got removed while it was selected
                 if SelectedItem > #CurrentScreen.Items - 1 then
                     SelectedItem = #CurrentScreen.Items - 1
