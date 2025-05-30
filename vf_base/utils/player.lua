@@ -103,16 +103,17 @@ end)
 RegisterNetEvent("vf_base:DisplayBankValue")
 AddEventHandler("vf_base:DisplayBankValue", function(value)
 	StatSetInt("BANK_BALANCE", value, true)
-	ShowHudComponentThisFrame(3)	
+	ShowHudComponentThisFrame(3)
 	CancelEvent()
 end)
 
-RegisterNetEvent('vf_base:refresh_inventory')
-AddEventHandler('vf_base:refresh_inventory', function(array)
-    inventoryItems = array
-    GetInventory()
-end)
+-- Where I am not using the database support, I will disable this for now.
+-- RegisterNetEvent('vf_base:refresh_inventory')
+-- AddEventHandler('vf_base:refresh_inventory', function(array)
+--     inventoryItems = array
+--     GetInventory()
+-- end)
 
-function GetInventory()
-	return inventoryItems
-end
+-- function GetInventory()
+-- 	return inventoryItems
+-- end

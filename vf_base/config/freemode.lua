@@ -6,6 +6,8 @@ Config = {
 	idleSecondsUntilKick = 600,
 	weapons = {
 	"weapon_knife",
-	"weapon_pistol"
+	"weapon_pistol",
+	"weapon_pumpshotgun",
+	"weapon_assaultshotgun"
     }
 }

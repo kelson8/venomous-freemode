@@ -42,13 +42,15 @@ Citizen.CreateThread(function()
 
 			showLoadingPrompt("PCARD_JOIN_GAME", 8000)
 			Wait(1000)
-			TriggerServerEvent("vf_base:GetInventory")	
+
+			-- Where I am not using the database support, I will disable this for now.
+			-- TriggerServerEvent("vf_base:GetInventory")
 		end
 
 		GetRandomMultiPlayerModel("mp_m_freemode_01")
 
 		for k,v in pairs(Config.weapons) do
-			GiveWeaponToPed(PlayerPedId(), v, -1, false, false)
+			GiveWeaponToPed(PlayerPedId(), v, 500, false, false)
 		end
 
 		Wait(5000)
@@ -80,7 +82,8 @@ Citizen.CreateThread(function()
 	end	
 
 	while true do
-		Wait(10)
+		-- Wait(10)
+		Wait(0)
 		if firstTick then
 			if IsPedDead then
 				deathscale = RequestDeathScreen()
