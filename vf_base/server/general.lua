@@ -40,13 +40,15 @@ AddEventHandler('vf_base:LoadPlayer', function()
 	end)
 end)
 
-PerformHttpRequest("https://raw.githubusercontent.com/FiveM-Scripts/venomous-freemode/master/vf_base/__resource.lua", function(errorCode, result, headers)
-    local version = GetResourceMetadata(GetCurrentResourceName(), 'resource_version', 0)
+-- I disabled this message, I may reuse it later or not.
+-- It always says this is out of date.
+-- PerformHttpRequest("https://raw.githubusercontent.com/FiveM-Scripts/venomous-freemode/master/vf_base/__resource.lua", function(errorCode, result, headers)
+--     local version = GetResourceMetadata(GetCurrentResourceName(), 'resource_version', 0)
 
-    if string.find(tostring(result), version) == nil then
-        print("\n\r[Venomous Freemode] The version on this server is not up to date. Please update now.\n\r")
-    end
-end, "GET", "", "")
+--     if string.find(tostring(result), version) == nil then
+--         print("\n\r[Venomous Freemode] The version on this server is not up to date. Please update now.\n\r")
+--     end
+-- end, "GET", "", "")
 
 RegisterServerEvent("vf_base:KickRes")
 AddEventHandler("vf_base:KickRes", function(reason)
