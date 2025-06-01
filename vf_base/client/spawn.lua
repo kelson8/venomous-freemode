@@ -16,6 +16,12 @@ You should have received a copy of the GNU Affero General Public License
 along with this program in the file "LICENSE".  If not, see <http://www.gnu.org/licenses/>.
 ]]
 
+-- This is what does the skyswoop effect for when you join in.
+-- Like in online, it will bring the camera in the sky with the sound effect.
+-- And it will bring you back down, also you get a random multiplayer character with a random outfit.
+
+-- TODO Make this effect configureable.
+
 firstTick = false
 local ShowLoadingScreen = false
 local spawnPos = generateSpawn()
@@ -57,7 +63,7 @@ Citizen.CreateThread(function()
 
 		SwitchToMultiSecondpart(PlayerPedId())
 		SetEntityVisible(PlayerPedId(), true, 0)
-		Wait(5000)		
+		Wait(5000)
 
 		TriggerServerEvent('vf_base:LoadPlayer')
 		exports.spawnmanager:setAutoSpawn(false)
@@ -79,7 +85,7 @@ Citizen.CreateThread(function()
 		if not IsIplActive(v) then
 			RequestIpl(v)
 		end
-	end	
+	end
 
 	while true do
 		-- Wait(10)
@@ -109,7 +115,7 @@ Citizen.CreateThread(function()
 					ClearPedBloodDamage(playerPed)
 					ClearPedWetness(playerPed)
 					StopScreenEffect("DeathFailOut")
-						
+
 					SetScaleformMovieAsNoLongerNeeded(deathscale)
 					SetScaleformMovieAsNoLongerNeeded(Instructional)
 
