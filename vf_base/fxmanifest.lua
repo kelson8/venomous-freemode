@@ -10,6 +10,10 @@ resource_version '1.1.3'
 
 -- dependencies {'ghmattimysql'}
 
+-- This seems to work.
+dependencies {'oxmysql'}
+server_script '@oxmysql/lib/MySQL.lua'
+
 -- kelson8-
 -- I added a enums.lua to this, for useful stuff like explosion ids, 
 -- controller button ids, hud components, and parachute states.
@@ -35,7 +39,8 @@ server_export 'GetInventoryItems'
 
 server_scripts {
     'config/freemode.lua',
-    -- 'server/database.lua',
+    -- TODO Disable this if it breaks
+    'server/database.lua',
     'server/player.lua',
     'server/general.lua'
 }
