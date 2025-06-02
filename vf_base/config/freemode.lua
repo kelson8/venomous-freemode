@@ -1,4 +1,4 @@
--- Setup what the player spawns in with here
+-- Setup what the player spawns in here
 
 Config = {
 	enableTextChat = true,
