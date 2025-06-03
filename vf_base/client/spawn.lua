@@ -66,8 +66,7 @@ Citizen.CreateThread(function()
 			end
 
 			if toggleLoadingPrompt then
-				-- showLoadingPrompt("PCARD_JOIN_GAME", 8000)
-				showLoadingPrompt("PCARD_JOIN_GAME", 1000)
+				showLoadingPrompt("PCARD_JOIN_GAME", 8000)
 				Wait(1000)
 			end
 
@@ -82,17 +81,16 @@ Citizen.CreateThread(function()
 		end
 
 		-- TODO Possibly revert these? I don't want to wait forever when debugging this.
-		-- Wait(5000)
+		Wait(3000)
 
 		if skySwoopEffect then
 			Wait(1000)
 
 			SwitchToMultiSecondpart(PlayerPedId())
-			-- Wait(5000)
-			Wait(1000)
+			Wait(5000)
+			-- Wait(1000)
 
 		end
-		
 		SetEntityVisible(PlayerPedId(), true, false)
 
 		TriggerServerEvent('vf_base:LoadPlayer')

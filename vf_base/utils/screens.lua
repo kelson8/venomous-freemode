@@ -1,3 +1,4 @@
+---@diagnostic disable: param-type-mismatch
 --[[
             vf_base - Venomous Freemode - base resource
               Copyright (C) 2018-2020  FiveM-Scripts
@@ -77,49 +78,69 @@ function RequestDeathScreen()
 		ShakeGameplayCam("DEATH_FAIL_IN_EFFECT_SHAKE", 2.0)
 		StartScreenEffect("DeathFailOut", 0, true)
 
-		PlaySoundFrontend(-1, "Bed", "WastedSounds", 1)
+		-- PlaySoundFrontend(-1, "Bed", "WastedSounds", 1)
+		PlaySoundFrontend(-1, "Bed", "WastedSounds", true)
 		deathscale = RequestDeathScaleform()
 		locksound = true
 	end
 
+
+    -- TODO Look into making these into functions to be used in a command or in my menu
+    -- Death scaleform
 	BeginScaleformMovieMethod(deathscale, "SHOW_WASTED_MP_MESSAGE")
     BeginTextCommandScaleformString("STRING")
     AddTextComponentSubstringTextLabel("RESPAWN_W")
     EndTextCommandScaleformString()
 
+    -- Unsure what this one is
     BeginTextCommandScaleformString("AMHB_BYOUDIED")
     EndTextCommandScaleformString()
 
 	PushScaleformMovieFunctionParameterFloat(105.0)
 	PushScaleformMovieFunctionParameterBool(true)
 	EndScaleformMovieMethod()
+    --
 
 	SetScreenDrawPosition(0.00, 0.00)
 	DrawScaleformMovieFullscreen(deathscale, 255, 255, 255, 255, 0)
+    --
 
+    -- Instructional Buttons
+
+    -- Clear
     BeginScaleformMovieMethod(Instructional, "CLEAR_ALL")
     EndScaleformMovieMethod()
+    --
 
+    --
     BeginScaleformMovieMethod(Instructional, "SET_CLEAR_SPACE")
     PushScaleformMovieFunctionParameterInt(200)
     EndScaleformMovieMethod()
+    --
 
+    -- Set the HUD_INPUT27 button
     BeginScaleformMovieMethod(Instructional, "SET_DATA_SLOT")
     PushScaleformMovieFunctionParameterInt(2)
     SetButton(GetControlInstructionalButton(2, 329, true))
     SetButtonMessage(GetLabelText("HUD_INPUT27"))
     EndScaleformMovieMethod()
+    --
 
+    -- Draw the instruction buttons
     BeginScaleformMovieMethod(Instructional, "DRAW_INSTRUCTIONAL_BUTTONS")
     EndScaleformMovieMethod()
+    --
 
+    -- Set the color
     BeginScaleformMovieMethod(Instructional, "SET_BACKGROUND_COLOUR")
     PushScaleformMovieFunctionParameterInt(0)
     PushScaleformMovieFunctionParameterInt(0)
     PushScaleformMovieFunctionParameterInt(0)
     PushScaleformMovieFunctionParameterInt(80)
     EndScaleformMovieMethod()
+    --
 
+    -- Draw the other scaleform.
     DrawScaleformMovieFullscreen(Instructional, 255, 255, 255, 255, 0)
 
 	return deathscale
