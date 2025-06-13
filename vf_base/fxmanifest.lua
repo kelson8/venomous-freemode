@@ -1,6 +1,9 @@
-fx_version 'adamant'
+fx_version 'cerulean'
 game 'gta5'
+lua54 'yes'
+
 author 'FiveM-Scripts'
+description 'FiveM Venomous Freemode base'
 
 -- Original author of theses scripts:
 -- https://github.com/FiveM-Scripts/venomous-freemode

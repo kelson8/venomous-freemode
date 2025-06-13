@@ -1,8 +1,12 @@
-fx_version 'adamant'
+fx_version 'cerulean'
 game 'gta5'
+lua54 'yes'
+
+author 'FiveM-Scripts'
+description 'FiveM Venomous Freemode bank'
 
 files({
-	'ui/fonts/ChaletComprimeCologneSixty.ttf',	
+	'ui/fonts/ChaletComprimeCologneSixty.ttf',
 	'ui/style.css',
 	'ui/img/logo.png',
 	'ui/index.html',

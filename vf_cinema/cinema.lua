@@ -1,3 +1,4 @@
+---@diagnostic disable: param-type-mismatch
 --[[
             vf_cinema - Venomous Freemode - cinema resource
               Copyright (C) 2018-2020  FiveM-Scripts
@@ -18,7 +19,8 @@ along with this program in the file "LICENSE".  If not, see <http://www.gnu.org/
 
 CinemaCoords = {
   {x = 300.788, y = 200.752, z = 104.385},
-  {x = -1417.9776, y = -196.28897, z = 47.17192},
+  -- This is already done by online-interiors
+--   {x = -1417.9776, y = -196.28897, z = 47.17192},
   {x = 302.907, y = 135.939, z = 160.946}
 }
 
@@ -27,9 +29,11 @@ local interior = nil
 
 function IsPlayerNearCinema()
 	playerPed = PlayerPedId()
+	local playerCoords = GetEntityCoords(playerPed, false)
 
 	for k,v in pairs(CinemaCoords) do
-		cinema = GetDistanceBetweenCoords(GetEntityCoords(playerPed, true), v.x, v.y, v.z-1.0001, true)
+		-- cinema = GetDistanceBetweenCoords(GetEntityCoords(playerPed, true), v.x, v.y, v.z-1.0001, true)
+		cinema = GetDistanceBetweenCoords(playerCoords.x, playerCoords.y, playerCoords.z, v.x, v.y, v.z-1.0001, true)
 		if cinema < 5.0 then
 			return true
 		end
@@ -39,7 +43,7 @@ end
 function CreateNamedRenderTargetForModel(name, model)
 	local handle = 0
 	if not IsNamedRendertargetRegistered(name) then
-		RegisterNamedRendertarget(name, 0)
+		RegisterNamedRendertarget(name, false)
 	end
 
 	if not IsNamedRendertargetLinked(model) then
@@ -59,10 +63,10 @@ function TaskEnterCinema()
 	DoScreenFadeOut(300)
 	Wait(350)
 
-	SetEntityVisible(playerPed, false, 0)
+	SetEntityVisible(playerPed, false, false)
 	SetEntityInvincible(playerPed, true)
 
-	SetEntityCoords(playerPed, 320.1841, 262.1565, 82.9706-1.0001)
+	SetEntityCoords(playerPed, 320.1841, 262.1565, 82.9706-1.0001, false, false, false, false)
 	SetEntityHeading(playerPed, 180.9706)
 	SetFollowPedCamViewMode(4)
 
@@ -78,9 +82,9 @@ function TaskEnterCinema()
 			Wait(1)
 		end
 
-		cinemaScreen = CreateObjectNoOffset(screenModel, 320.1257, 248.6608, 86.56934, 1, true, false)
+		cinemaScreen = CreateObjectNoOffset(screenModel, 320.1257, 248.6608, 86.56934, true, true, false)
 	else
-		cinemaScreen = GetClosestObjectOfType(319.884, 262.103, 82.917, 20.475, screenModel, 0, 0, 0)
+		cinemaScreen = GetClosestObjectOfType(319.884, 262.103, 82.917, 20.475, screenModel, false, false, false)
 	end
 
 	if cinemaScreen then
@@ -112,13 +116,13 @@ function TaskLeaveCinema(screenId)
 	end
 
 	UnpinInterior(interior)
-	SetEntityCoords(playerPed, oldCoords.x, oldCoords.y, oldCoords.z-1.0001)
+	SetEntityCoords(playerPed, oldCoords.x, oldCoords.y, oldCoords.z-1.0001, false, false, false, false)
 
 	while not HasCollisionLoadedAroundEntity(playerPed) do
 		Wait(100)
 	end
 
-	SetEntityVisible(playerPed, true, 0)
+	SetEntityVisible(playerPed, true, false)
 	SetEntityInvincible(playerPed, false)
 
 	if IsScreenFadedOut() then

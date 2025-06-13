@@ -64,24 +64,27 @@ function GetRandomMultiPlayerModel(modelhash)
 			SetPlayerModel(PlayerId(), modelhash)
 		end
 
-		SetPedHeadBlendData(PlayerPedId(), 0, math.random(45), 0,math.random(45), math.random(5), math.random(5),1.0,1.0,1.0,true)
+		SetPedHeadBlendData(PlayerPedId(), 0, math.random(45), 0, math.random(45), math.random(5), math.random(5), 1.0, 1.0, 1.0, true)
 		SetPedHairColor(PlayerPedId(), math.random(1, 4), 1)
 
 		if IsPedMale(PlayerPedId()) then
 			SetPedComponentVariation(PlayerPedId(), PedVarComp.PV_COMP_HEAD, math.random(0, 5), 0, 2)
 			SetPedComponentVariation(PlayerPedId(), PedVarComp.PV_COMP_HAIR, math.random(1, 17), 3, 2)
+			-- SetPedComponentVariation(PlayerPedId(), PedVarComp.PV_COMP_UPPR, 0, 0, 2)
 			SetPedComponentVariation(PlayerPedId(), PedVarComp.PV_COMP_UPPR, 0, 0, 2)
 
 			SetPedComponentVariation(PlayerPedId(), PedVarComp.PV_COMP_LOWR, 1, math.random(0, 15), 2)
 			SetPedComponentVariation(PlayerPedId(), PedVarComp.PV_COMP_FEET, 3, math.random(0, 15), 2)
-			SetPedComponentVariation(PlayerPedId(), PedVarComp.PV_COMP_ACCS, 0, 240, 0)
+			-- SetPedComponentVariation(PlayerPedId(), PedVarComp.PV_COMP_ACCS, 0, 240, 0)
+			SetPedComponentVariation(PlayerPedId(), PedVarComp.PV_COMP_ACCS, 0, 0, 0)
 			SetPedComponentVariation(PlayerPedId(), PedVarComp.PV_COMP_DECL, 0, 0, 2)
 			SetPedComponentVariation(PlayerPedId(), PedVarComp.PV_COMP_JBIB, 0, math.random(0, 5), 0)
 		else
 			SetPedComponentVariation(PlayerPedId(), PedVarComp.PV_COMP_HEAD, 0, 0, 2)
 			SetPedComponentVariation(PlayerPedId(), PedVarComp.PV_COMP_HAIR, math.random(1, 17), 3, 2)
 			SetPedComponentVariation(PlayerPedId(), PedVarComp.PV_COMP_UPPR, 0, 0, 2)
-			SetPedComponentVariation(PlayerPedId(), PedVarComp.PV_COMP_LOWR, 1, math.random(2), 2)
+			-- SetPedComponentVariation(PlayerPedId(), PedVarComp.PV_COMP_LOWR, 1, math.random(2), 2)
+			SetPedComponentVariation(PlayerPedId(), PedVarComp.PV_COMP_LOWR, math.random(0, 6), 0, 2)
 			SetPedComponentVariation(PlayerPedId(), PedVarComp.PV_COMP_FEET, math.random(0, 6), 0, 2)
 
 			SetPedComponentVariation(PlayerPedId(), PedVarComp.PV_COMP_ACCS, 2, 2, 2)
@@ -108,12 +111,12 @@ AddEventHandler("vf_base:DisplayBankValue", function(value)
 end)
 
 -- Where I am not using the database support, I will disable this for now.
--- RegisterNetEvent('vf_base:refresh_inventory')
--- AddEventHandler('vf_base:refresh_inventory', function(array)
---     inventoryItems = array
---     GetInventory()
--- end)
+RegisterNetEvent('vf_base:refresh_inventory')
+AddEventHandler('vf_base:refresh_inventory', function(array)
+    inventoryItems = array
+    GetInventory()
+end)
 
--- function GetInventory()
--- 	return inventoryItems
--- end
+function GetInventory()
+	return inventoryItems
+end

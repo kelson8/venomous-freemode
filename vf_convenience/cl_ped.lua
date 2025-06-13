@@ -1,3 +1,4 @@
+---@diagnostic disable: param-type-mismatch
 --[[
             vf_convenience - Venomous Freemode - convenience stores resource
               Copyright (C) 2018-2020  FiveM-Scripts
@@ -29,7 +30,7 @@ function CreateStorePed(x, y, z, heading)
       Wait(50)
     end
 
-    local ped = CreatePed(4, modelHash, x, y, z-1, heading, true, false)
+    local ped = CreatePed(4, modelHash, x, y, z - 1, heading, true, false)
     while not DoesEntityExist(ped) do
       Wait(10)
     end
@@ -45,7 +46,7 @@ function CreateStorePed(x, y, z, heading)
     GiveWeaponToPed(ped, GetHashKey("weapon_pistol"), -1, false, false)
 
     SetEntityHeading(ped, heading)
-    SetPedFleeAttributes(ped, 0, 0)
+    SetPedFleeAttributes(ped, 0, false)
     SetEntityInvincible(ped, false)
     TaskSetBlockingOfNonTemporaryEvents(ped, true)
 
@@ -62,9 +63,9 @@ function TaskStartHoldUp(ped)
   Wait(50)
 
   TaskGoStraightToCoord(storeKeeper, atmX, atmY, atmZ, 0.2, 4000, GetEntityHeading(register), 0.5)
-  Wait(300)  
+  Wait(300)
 
-  local _, taskSequence = OpenSequenceTask(0)
+  local _, taskSequence = OpenSequenceTask()
   TaskTurnPedToFaceEntity(storeKeeper, PlayerPedId(), 10000)
   TaskLookAtEntity(ped, PlayerId(), -1, 0, 2)
   TaskPlayAnim(ped, "mp_am_hold_up", "holdup_victim_20s", 8.0, -8.0, -1, 262192, 0, 0, 0, 0)
@@ -80,7 +81,7 @@ function TaskStartHoldUp(ped)
 
   bag = CreateObject(storebag, coords.x, coords.y, coords.z, false, true, true)
   AttachEntityToEntity(bag, storeKeeper, 11816, 0.0, 0.0, 0.0, 0.0, -90.0, 180.0, false, false, false, false, 2, true)
-  
+
   --AttachEntityToEntity(entity1, entity2, boneIndex, xPos, yPos, zPos, xRot, yRot, zRot, p9, useSoftPinning, collision, isPed, vertexIndex, fixedRot)
   -- TaskPlayAnim(ped, "mp_am_hold_up", "handsup_base", 4.0, -4.0, -1, 49, 0, 0, 0, 0)
   CloseSequenceTask(taskSequence)
@@ -88,10 +89,11 @@ function TaskStartHoldUp(ped)
 
   Wait(20000)
   SetPlayerWantedLevel(PlayerId(), 2, false)
-  SetPlayerWantedLevelNow(PlayerId())
+  SetPlayerWantedLevelNow(PlayerId(), false)
 end
 
 function TaskStartRobbing(ped)
+  local pedCoords = GetEntityCoords(ped, false)
   animDict = "random@shop_robbery"
   if not HasAnimDictLoaded(animDict) then
     RequestAnimDict(animDict)
@@ -100,7 +102,9 @@ function TaskStartRobbing(ped)
     end
   end
 
-  register = GetClosestObjectOfType(GetEntityCoords(ped, true), 0.75, GetHashKey("prop_till_02"), false)
+  -- register = GetClosestObjectOfType(GetEntityCoords(ped, true), 0.75, GetHashKey("prop_till_02"), false)
+  register = GetClosestObjectOfType(pedCoords.x, pedCoords.y, pedCoords.z, 0.75, GetHashKey("prop_till_02"), false, false,
+    false)
   if DoesEntityExist(register) then
     atmX, atmY, atmZ = table.unpack(GetOffsetFromEntityInWorldCoords(register, 0.0, 0.2, 0.0))
     TaskGoStraightToCoord(playerPed, atmX, atmY, atmZ, 0.1, 4000, GetEntityHeading(register), 0.5)
@@ -108,10 +112,10 @@ function TaskStartRobbing(ped)
     Wait(3000)
   end
 
-  _, taskSequence = OpenSequenceTask(0)
-  TaskPlayAnim(ped, animDict, "robbery_intro_loop_a", 8.0, -8.0, -1, 0, 0, 0, 0, 0)
-  TaskPlayAnim(ped, animDict, "robbery_intro_loop_b", 8.0, -8.0, 4000, 1, 0, 0, 0, 0)
-  TaskPlayAnim(ped, animDict, "robbery_intro_loop_bag", 8.0, -8.0, 4000, 1, 0, 0, 0, 0)
+  _, taskSequence = OpenSequenceTask()
+  TaskPlayAnim(ped, animDict, "robbery_intro_loop_a", 8.0, -8.0, -1, 0, 0, false, false, false)
+  TaskPlayAnim(ped, animDict, "robbery_intro_loop_b", 8.0, -8.0, 4000, 1, 0, false, false, false)
+  TaskPlayAnim(ped, animDict, "robbery_intro_loop_bag", 8.0, -8.0, 4000, 1, 0, false, false, false)
 
   CloseSequenceTask(taskSequence)
   TaskPerformSequence(ped, taskSequence)
@@ -120,7 +124,7 @@ end
 
 function isNearGeneralStore()
   local distance = 60.0
-  local coords = GetEntityCoords(PlayerPedId(), 0)
+  local coords = GetEntityCoords(PlayerPedId(), false)
 
   for k, item in pairs(locations) do
     local bCoords = item["blip"]
@@ -130,7 +134,7 @@ function isNearGeneralStore()
       if not DoesEntityExist(storeKeeper) then
         local x, y, z, w = table.unpack(item["ped"])
         local menu = item["menu"]
-        
+
         storeKeeper = CreateStorePed(x, y, z, w)
         print('Created store ped ' .. storeKeeper)
         MenuType = menu
@@ -143,9 +147,9 @@ function isNearGeneralStore()
 end
 
 function IsPlayerNearShopKeeper(ped)
-  local coords = GetEntityCoords(PlayerPedId(), 0)
-  local pcoords = GetEntityCoords(ped, 0)
-  local distance = GetDistanceBetweenCoords(coords.x, coords.y , coords.z, pcoords.x, pcoords.y, pcoords.z, true)
+  local coords = GetEntityCoords(PlayerPedId(), false)
+  local pcoords = GetEntityCoords(ped, false)
+  local distance = GetDistanceBetweenCoords(coords.x, coords.y, coords.z, pcoords.x, pcoords.y, pcoords.z, true)
 
   if distance <= 2.0 then
     return true

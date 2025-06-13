@@ -16,6 +16,8 @@ You should have received a copy of the GNU Affero General Public License
 along with this program in the file "LICENSE".  If not, see <http://www.gnu.org/licenses/>.
 ]]
 
+-- TODO Make this keep track if the vehicle, if it blows up auto remove it from the map and cleanup
+
 firstTickPassed = false
 inventoryItems = {}
 local bodyarm = 1
@@ -401,7 +403,7 @@ Citizen.CreateThread(function()
     Wait(500)
 
     while true do
-        Wait(10)
+        Wait(0)
         if firstTickPassed then
             coords = GetEntityCoords(PlayerPedId(), true)
 

@@ -103,6 +103,7 @@ function Player:AddBank(source, value)
 				newvalue = result + value
 
 				TriggerClientEvent('vf_base:DisplayBankValue', src, newvalue)
+				-- print(string.format("New value: %s", newvalue))
 				exports.ghmattimysql:execute("UPDATE venomous_players SET bank=@value WHERE license = @license", {['license'] = tostring(pLicense), ['value'] = tostring(newvalue)})
 				local result = nil
 			end

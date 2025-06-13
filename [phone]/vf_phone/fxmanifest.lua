@@ -1,5 +1,9 @@
-fx_version 'adamant'
+fx_version 'cerulean'
 game 'gta5'
+lua54 'yes'
+
+author 'FiveM-Scripts'
+description 'FiveM Venomous Freemode phone'
 
 client_scripts {
     "phone/cl_phone.lua",
